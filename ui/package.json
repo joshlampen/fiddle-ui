@@ -8,8 +8,7 @@
         "start": "node server.js",
         "build": "webpack --mode production",
         "format": "prettier --write \"src/**/*.js\"",
-        "eslint-fix": "eslint --fix \"src/**/*.js\"",
-        "postinstall": "cd client && npm install"
+        "eslint-fix": "eslint --fix \"src/**/*.js\""
     },
     "keywords": [],
     "author": "",
