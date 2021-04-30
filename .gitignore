@@ -20,9 +20,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# env
-.env
-
 # binaries
 api/api
 spotify-api/spotify-api

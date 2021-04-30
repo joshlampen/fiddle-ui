@@ -1,0 +1,2 @@
+export const PLAYER_STATE_INTERVAL = 500;
+export const PLAYER_CHECK_INTERVAL = 1000;

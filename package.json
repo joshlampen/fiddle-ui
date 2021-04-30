@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "dev": "webpack serve --mode development",
-        "start": "node server.js",
+        "start": "node server/server.js",
         "build": "webpack --mode production",
         "format": "prettier --write \"src/**/*.js\"",
         "eslint-fix": "eslint --fix \"src/**/*.js\""
@@ -14,14 +14,20 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "await-of": "^3.1.0",
+        "core-js": "^3.11.0",
         "express": "^4.17.1",
         "react": "^17.0.2",
-        "react-dom": "^17.0.2"
+        "react-dom": "^17.0.2",
+        "redux-create-actiontype": "^1.0.0",
+        "redux-thunk": "^2.3.0",
+        "regenerator-runtime": "^0.13.7"
     },
     "devDependencies": {
         "@babel/core": "^7.13.16",
         "@babel/preset-env": "^7.13.15",
         "@babel/preset-react": "^7.13.13",
+        "axios": "^0.21.1",
         "babel-eslint": "^10.1.0",
         "babel-loader": "^8.2.2",
         "css-loader": "^5.2.4",
@@ -35,6 +41,8 @@
         "less": "^4.1.1",
         "less-loader": "^8.1.1",
         "prettier": "2.2.1",
+        "react-redux": "^7.2.4",
+        "redux": "^4.1.0",
         "style-loader": "^2.0.0",
         "webpack": "^5.35.1",
         "webpack-cli": "^4.6.0",
