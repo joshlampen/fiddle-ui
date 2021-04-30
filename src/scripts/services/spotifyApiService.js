@@ -1,5 +1,5 @@
 import axios from 'axios';
-import API_ENDPOINTS from './constants';
+import API_ENDPOINTS from './apiEndpoints';
 
 export const getUser = (authId) => {
     const params = { auth_id: authId };

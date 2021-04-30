@@ -1,11 +1,11 @@
-import React, { useState, useCallback } from "react";
-import { connect } from "react-redux";
-import { compose } from "redux";
-import PropTypes from "prop-types";
-import AuthButton from "./components/AuthButton";
-import authButtonActions from "./ducks/authButton";
-import { AUTH_WINDOW_URL } from "./constants";
-import { v4 as uuidv4 } from "uuid";
+import React, { useState, useCallback } from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import PropTypes from 'prop-types';
+import AuthButton from './components/AuthButton';
+import authButtonActions from './ducks/authButton';
+import API_ENDPOINTS from '../../services/apiEndpoints';
+import { v4 as uuidv4 } from 'uuid';
 
 const emptyFunction = () => {};
 
@@ -21,9 +21,9 @@ const AuthButtonContainer = ({ onSetAuthId = emptyFunction }) => {
 
         setIsSubmitting(true);
         let popup = window.open(
-            `${AUTH_WINDOW_URL}?auth_id=${authId}`,
-            "SpotifyAuth",
-            "width=800,height=700"
+            `${API_ENDPOINTS.spotify.authorize}?auth_id=${authId}`,
+            'SpotifyAuth',
+            'width=800,height=700'
         );
 
         const windowInterval = setInterval(() => {
