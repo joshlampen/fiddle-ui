@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React, { useEffect, useCallback, useRef, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import { playTrack } from '../../services/spotifyApiService';
@@ -32,14 +33,14 @@ const WithSpotifyPlayer = ({
         const nextTrack = tracks[nextTrackIndex];
 
         onSetPlayerTrack(nextTrack.spotify_uri);
-    }, [playerTrackUriRef, tracksRef]);
+    }, [playerTrackUriRef, tracksRef, onSetPlayerTrack]);
 
     const _onCheckPlayerState = useCallback(() => {
-        if (!playerRef.current) {
-            return;
-        }
-
         const playerStateInterval = setInterval(() => {
+            if (!playerRef.current) {
+                return;
+            }
+
             const player = playerRef.current;
 
             player
@@ -57,7 +58,7 @@ const WithSpotifyPlayer = ({
                 })
                 .catch(() => clearInterval(playerStateInterval));
         }, PLAYER_STATE_INTERVAL);
-    }, [playerRef, PLAYER_STATE_INTERVAL]);
+    }, [playerRef, _onPlayNextTrack]);
 
     const _onCreateEventHandlers = (player) => {
         player.on('initialization_error', (e = {}) => {
@@ -84,11 +85,11 @@ const WithSpotifyPlayer = ({
     };
 
     const _onCheckForPlayer = useCallback(() => {
-        if (!window.Spotify || playerRef.current) {
-            return;
-        }
-
         const playerCheckInterval = setInterval(() => {
+            if (!window.Spotify || playerRef.current || !user.token) {
+                return;
+            }
+
             clearInterval(playerCheckInterval);
 
             const player = new window.Spotify.Player({
@@ -102,7 +103,7 @@ const WithSpotifyPlayer = ({
             player.connect();
             _onCreateEventHandlers(player);
         }, PLAYER_CHECK_INTERVAL);
-    }, [playerRef, user]);
+    }, [user.token]);
 
     // Plays a track via spotify uri
     const _onPlay = useCallback(
@@ -132,32 +133,21 @@ const WithSpotifyPlayer = ({
         tracksRef.current = tracks;
     }, [tracks]);
 
-    // Check for player on load
     useEffect(() => {
         _onCheckForPlayer();
     }, [_onCheckForPlayer]);
 
-    // Once player exists, check player state
     useEffect(() => {
-        if (!playerRef.current) {
-            return;
-        }
-
         _onCheckPlayerState();
-    }, [playerRef, _onCheckPlayerState]);
+    }, [_onCheckPlayerState]);
 
     // Play a track when we receive a new uri
     useEffect(() => {
-        if (
-            !playerTrackUriRef.current ||
-            !playerRef.current ||
-            !deviceIdRef.current
-        ) {
+        if (!playerTrackUri || !playerRef.current || !deviceIdRef.current) {
             return;
         }
 
         const player = playerRef.current;
-        const playerTrackUri = playerTrackUriRef.current;
 
         _onPlay({
             playerInstance: player,

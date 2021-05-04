@@ -1,11 +1,9 @@
 import React, { useState, useCallback } from 'react';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import AuthButton from './components/AuthButton';
-import authButtonActions from './ducks/authButton';
 import API_ENDPOINTS from '../../services/apiEndpoints';
 import { v4 as uuidv4 } from 'uuid';
+import Cookies from 'universal-cookie';
 
 const emptyFunction = () => {};
 
@@ -18,6 +16,7 @@ const AuthButtonContainer = ({ onSetAuthId = emptyFunction }) => {
         }
 
         const authId = uuidv4();
+        const cookies = new Cookies();
 
         setIsSubmitting(true);
         let popup = window.open(
@@ -32,9 +31,10 @@ const AuthButtonContainer = ({ onSetAuthId = emptyFunction }) => {
                 popup = undefined;
                 setIsSubmitting(false);
                 onSetAuthId(authId);
+                cookies.set('fiddle', authId);
             }
         }, 1000);
-    }, [isSubmitting]);
+    }, [isSubmitting, onSetAuthId]);
 
     return (
         <AuthButton isSubmitting={isSubmitting} onAuthorize={_onAuthorize} />
@@ -45,14 +45,4 @@ AuthButtonContainer.propTypes = {
     onSetAuthId: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-    ...state,
-});
-
-const mapDispatchToProps = {
-    ...authButtonActions,
-};
-
-const enhance = compose(connect(mapStateToProps, mapDispatchToProps));
-
-export default enhance(AuthButtonContainer);
+export default AuthButtonContainer;

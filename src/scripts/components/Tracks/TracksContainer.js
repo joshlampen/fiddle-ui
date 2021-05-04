@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import tracksActions from './ducks/tracks';
-import { getTracks } from '../../services/apiService';
 import Tracks from './components/Tracks';
 import WithSpotifyPlayer from '../../HOCs/WithSpotifyPlayer';
 
@@ -16,12 +15,23 @@ const TracksContainer = ({
     playerTrackUri,
     user = emptyObject,
     tracks = emptyArray,
+    onGetUser = emptyFunction,
     onGetTracks = emptyFunction,
+    // onGetPlaylists = emptyFunction,
     onSetPlayerTrack = emptyFunction,
 }) => {
     useEffect(() => {
+        onGetUser(authId);
+    }, [onGetUser, authId]);
+
+    useEffect(() => {
+        if (!user.id) {
+            return;
+        }
+
         onGetTracks(user.id);
-    }, [user, getTracks]);
+        // onGetPlaylists(user.id);
+    }, [onGetTracks, user.id]);
 
     return (
         <WithSpotifyPlayer
@@ -45,7 +55,9 @@ TracksContainer.propTypes = {
     playerTrackUri: PropTypes.string,
     user: PropTypes.object,
     tracks: PropTypes.arrayOf(PropTypes.object),
+    onGetUser: PropTypes.func.isRequired,
     onGetTracks: PropTypes.func.isRequired,
+    onGetPlaylists: PropTypes.func.isRequired,
     onSetPlayerTrack: PropTypes.func.isRequired,
 };
 

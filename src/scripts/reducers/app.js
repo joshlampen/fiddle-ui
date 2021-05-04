@@ -1,11 +1,12 @@
-import { types } from "./constants";
+import { types } from './constants';
 
 const initialState = {
     hasSpotifyData: false,
-    authId: "",
-    playerTrackUri: "",
+    authId: '',
+    playerTrackUri: '',
     user: {},
     tracks: [],
+    playlists: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -30,6 +31,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 tracks: [...action.tracks],
             };
+        case types.SET_PLAYLISTS:
+            return {
+                ...state,
+                playlists: [...action.playlists],
+            };
         case types.SET_PLAYER_TRACK:
             return {
                 ...state,
@@ -44,6 +50,12 @@ export const actions = {
     onSetPlayerTrack: (uri) => ({
         type: types.SET_PLAYER_TRACK,
         uri,
+    }),
+
+    onSetAuthId: (authId) => ({ type: types.SET_AUTH_ID, authId }),
+
+    onCompleteSpotifyDataRetrieval: () => ({
+        type: types.SPOTIFY_DATA_RETRIEVAL_COMPLETE,
     }),
 };
 

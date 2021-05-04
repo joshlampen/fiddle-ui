@@ -1,6 +1,7 @@
 {
     "parser": "babel-eslint",
-    "extends": ["react", "prettier"],
+    "extends": ["eslint:recommended", "prettier"],
+    "plugins": ["react", "react-hooks"],
     "env": {
         "browser": true,
         "node": true
@@ -9,5 +10,18 @@
         "react": {
             "version": "detect"
         }
+    },
+    "rules": {
+        "no-unused-vars": [
+            2,
+            {
+                "vars": "all",
+                "args": "none"
+            }
+        ],
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn"
     }
 }

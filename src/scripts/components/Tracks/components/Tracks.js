@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Track from './Track';
 
+import './tracks.less';
+
 const emptyArray = [];
 const emptyFunction = () => {};
 
@@ -12,7 +14,7 @@ const Tracks = ({
     onSetPlayerTrack = emptyFunction,
 }) => {
     return (
-        <>
+        <div className="tracks">
             {tracks.map((track = {}, index) => (
                 <Track
                     key={`${index}-${track.id}`}
@@ -23,7 +25,7 @@ const Tracks = ({
                     onSetPlayerTrack={onSetPlayerTrack}
                 />
             ))}
-        </>
+        </div>
     );
 };
 

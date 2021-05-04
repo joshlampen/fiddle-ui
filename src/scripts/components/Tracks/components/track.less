@@ -1,27 +1,155 @@
+@import '../../../../styles/colors.less';
+
 .track {
     display: flex;
-    width: 100%;
-    height: 2rem;
+    // width: 100%;
+    height: 3.5rem;
     margin-bottom: 1rem;
+    border-radius: 0.5rem;
 
-    &__image {
-        height: 90%;
+    &--hovered {
+        // background-color: rgb(20, 20, 20, 0.5);
+        background-color: @track--hovered;
     }
 
-    &__name {
+    &__action {
         display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        width: 34%;
+        justify-content: center;
+        align-items: center;
+        width: 3rem;
 
-        &__artists {
-            display: flex;
-            flex-direction: row;
-            width: 33%;
+        &__index {
+            color: @track-grey;
+        }
+
+        &__button {
+            color: @track-white;
+            cursor: pointer;
         }
     }
 
-    &__album {
-        width: 33%;
+    &__imageContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &__image {
+            height: 70%;
+            border-radius: 0.2rem;
+        }
+    }
+
+    &__nameAndArtists {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        margin-left: 1rem;
+
+        &__name {
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 20rem;
+            color: @track-white;
+            font-size: 1rem;
+
+            &--playing {
+                color: @track-purple;
+            }
+
+            &:hover {
+                cursor: default;
+            }
+        }
+
+        &__artists {
+            display: inline-block;
+            width: 100%;
+            color: @track-grey;
+            margin-top: 0.2rem;
+            font-size: 0.9rem;
+
+            &--hovered {
+                color: @track-white;
+            }
+
+            &__artistContainer {
+                &__artist {
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+
+    &__albumContainer {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-right: 1.5rem;
+        color: @track-grey;
+        font-size: 0.9rem;
+
+        &--hovered {
+            color: @track-white;
+        }
+
+        &__album {
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 10rem;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__playlistContainer {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-right: 1.5rem;
+        color: @track-grey;
+        font-size: 0.9rem;
+
+        &--hovered {
+            color: @track-white;
+        }
+
+        &__playlist {
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 10rem;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__addedAt {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 10rem;
+        color: @track-grey;
+        font-size: 0.9rem;
+    }
+
+    &__duration {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 10rem;
+        color: @track-grey;
+        font-size: 0.9rem;
     }
 }
