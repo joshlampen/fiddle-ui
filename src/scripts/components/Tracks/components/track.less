@@ -110,6 +110,31 @@
         }
     }
 
+    &__ownerContainer {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-right: 1.5rem;
+        color: @track-grey;
+        font-size: 0.9rem;
+
+        &--hovered {
+            color: @track-white;
+        }
+
+        &__owner {
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 10rem;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
     &__playlistContainer {
         display: flex;
         justify-content: flex-start;
@@ -142,6 +167,10 @@
         width: 10rem;
         color: @track-grey;
         font-size: 0.9rem;
+
+        &:hover {
+            cursor: default;
+        }
     }
 
     &__duration {
@@ -151,5 +180,9 @@
         width: 10rem;
         color: @track-grey;
         font-size: 0.9rem;
+
+        &:hover {
+            cursor: default;
+        }
     }
 }

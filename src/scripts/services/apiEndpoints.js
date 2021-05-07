@@ -5,6 +5,7 @@ const spotifyApiBase = formatSpotifyApiUrl();
 
 const API_ENDPOINTS = {
     users: `${apiBase}/users`,
+    friends: `${apiBase}/users/friends`,
     tracks: `${apiBase}/tracks`,
     playlists: `${apiBase}/playlists`,
 

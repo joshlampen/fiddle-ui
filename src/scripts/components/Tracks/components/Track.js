@@ -9,7 +9,7 @@ import activity from 'react-useanimations/lib/activity';
 import { ACTIVITY_ICON_COLOR } from '../constants';
 import moment from 'moment';
 import momentDurationFormatSetup from 'moment-duration-format';
-// import RelativeTime from '@yaireo/relative-Time';
+import RelativeTime from '@yaireo/relative-Time';
 
 import './track.less';
 
@@ -19,12 +19,20 @@ const emptyFunction = () => {};
 const Track = ({
     index,
     playerTrackUri,
+    user = emptyObject,
     track = emptyObject,
+    playlistsMap = emptyObject,
+    friendsMap = emptyObject,
     onTogglePlay = emptyFunction,
     onSetPlayerTrack = emptyFunction,
 }) => {
+    const ownersMap = { [user.id]: user, ...friendsMap };
+    const [ownerId = ''] = track.owner_ids;
+    const { [ownerId]: owner = {} } = ownersMap;
+    const [playlistId = ''] = track.playlist_ids;
+    const { [playlistId]: playlist = {} } = playlistsMap;
+    const relativeTime = new RelativeTime();
     momentDurationFormatSetup(moment);
-    // const relativeTime = new RelativeTime();
     const trackDuration = moment
         .duration(track.duration_ms, 'ms')
         .format('m:ss');
@@ -47,6 +55,10 @@ const Track = ({
 
     const albumContainerClassNames = classNames('track__albumContainer', {
         'track__albumContainer--hovered': isTrackHovered,
+    });
+
+    const ownerContainerClassNames = classNames('track__ownerContainer', {
+        'track__ownerContainer--hovered': isTrackHovered,
     });
 
     const playlistContainerClassNames = classNames('track__playlistContainer', {
@@ -141,24 +153,28 @@ const Track = ({
                     {track.album?.name}
                 </a>
             </div>
-            <div className={playlistContainerClassNames}>
-                {/* <a
-                    className="track__playlistContainer__playlist"
-                    href={track.playlist_spotify_url}
+            <div className={ownerContainerClassNames}>
+                <a
+                    className="track__ownerContainer__owner"
+                    href={owner.spotify_url}
                     target="_blank"
                     rel="noreferrer"
                 >
-                    {track.playlist_name}
-                </a> */}
-                {track.playlist_ids.map((id) => (
-                    <span>{id}</span>
-                ))}
+                    {owner.display_name}
+                </a>
+            </div>
+            <div className={playlistContainerClassNames}>
+                <a
+                    className="track__playlistContainer__playlist"
+                    href={playlist.spotify_url}
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    {playlist.name}
+                </a>
             </div>
             <div className="track__addedAt">
-                {/* {relativeTime.from(new Date(track.added_at))} */}
-                {track.added_ats.map((time) => (
-                    <span>{time}</span>
-                ))}
+                {relativeTime.from(new Date(track.added_at))}
             </div>
             <div className="track__duration">{trackDuration}</div>
         </div>
@@ -168,7 +184,10 @@ const Track = ({
 Track.propTypes = {
     index: PropTypes.number,
     playerTrackUri: PropTypes.string,
+    user: PropTypes.object,
     track: PropTypes.object,
+    playlistsMap: PropTypes.object,
+    friendsMap: PropTypes.object,
     onTogglePlay: PropTypes.func.isRequired,
     onSetPlayerTrack: PropTypes.func.isRequired,
 };

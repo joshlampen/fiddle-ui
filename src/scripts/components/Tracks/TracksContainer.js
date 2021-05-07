@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
-import tracksActions from './ducks/tracks';
+import { actions } from '../../reducers/app';
 import Tracks from './components/Tracks';
 import WithSpotifyPlayer from '../../HOCs/WithSpotifyPlayer';
 
@@ -14,10 +14,13 @@ const TracksContainer = ({
     authId,
     playerTrackUri,
     user = emptyObject,
+    friendsMap = emptyObject,
+    playlistsMap = emptyObject,
     tracks = emptyArray,
     onGetUser = emptyFunction,
+    onGetFriends = emptyFunction,
     onGetTracks = emptyFunction,
-    // onGetPlaylists = emptyFunction,
+    onGetPlaylists = emptyFunction,
     onSetPlayerTrack = emptyFunction,
 }) => {
     useEffect(() => {
@@ -29,9 +32,10 @@ const TracksContainer = ({
             return;
         }
 
+        onGetFriends(user.id);
         onGetTracks(user.id);
-        // onGetPlaylists(user.id);
-    }, [onGetTracks, user.id]);
+        onGetPlaylists(user.id);
+    }, [user.id, onGetFriends, onGetTracks, onGetPlaylists]);
 
     return (
         <WithSpotifyPlayer
@@ -43,7 +47,10 @@ const TracksContainer = ({
         >
             <Tracks
                 playerTrackUri={playerTrackUri}
+                user={user}
                 tracks={tracks}
+                playlistsMap={playlistsMap}
+                friendsMap={friendsMap}
                 onSetPlayerTrack={onSetPlayerTrack}
             />
         </WithSpotifyPlayer>
@@ -54,8 +61,11 @@ TracksContainer.propTypes = {
     authId: PropTypes.string,
     playerTrackUri: PropTypes.string,
     user: PropTypes.object,
+    friendsMap: PropTypes.object,
+    playlistsMap: PropTypes.object,
     tracks: PropTypes.arrayOf(PropTypes.object),
     onGetUser: PropTypes.func.isRequired,
+    onGetFriends: PropTypes.func.isRequired,
     onGetTracks: PropTypes.func.isRequired,
     onGetPlaylists: PropTypes.func.isRequired,
     onSetPlayerTrack: PropTypes.func.isRequired,
@@ -66,7 +76,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    ...tracksActions,
+    ...actions,
 };
 
 const enhance = compose(connect(mapStateToProps, mapDispatchToProps));

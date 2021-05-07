@@ -4,6 +4,7 @@ export const types = createActionTypes()(
     'SET_AUTH_ID',
     'SPOTIFY_DATA_RETRIEVAL_COMPLETE',
     'SET_USER',
+    'SET_FRIENDS',
     'SET_TRACKS',
     'SET_PLAYLISTS',
     'SET_PLAYER_TRACK'
